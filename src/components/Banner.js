@@ -1,4 +1,4 @@
-import { Row, Col, Button, Jumbotron} from 'react-bootstrap';
+import { Row, Col, Button, Jumbotron } from 'react-bootstrap';
 
 export default function Banner(){
     return (

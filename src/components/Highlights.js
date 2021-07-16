@@ -1,4 +1,4 @@
-import { Row, Col, Card} from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 
 export default function Highlights(){
     return (
