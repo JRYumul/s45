@@ -20,14 +20,12 @@ export default function Course({ courseProp }){
     //     setCount(count + 1);
     // }
     const enroll = () => {
-        if (seatsCount === 0) {
-            // alert the user
-            alert('No more seats available');
-        } else {
-            setCount(count + 1); // increment
-            setSeatsCount(seatsCount - 1); // decrement
-        }
-    }
+        setCount(count + 1);
+    };
+
+    const updateSeats = () => {
+        setSeatsCount(seatsCount - 1);
+    };
 
     return (
             <Card className="card-highlight">
@@ -40,7 +38,15 @@ export default function Course({ courseProp }){
                     <h6>Price:</h6>
                     <p>{price}</p>
                     <p>{count} enrollees</p>
-                    <Button onClick={enroll} variant="primary">Enroll</Button>
+                    <Button onClick={() => {
+                        if (seatsCount === 0) {
+                            // do something
+                            alert('No more seats available');
+                        } else {
+                            enroll();
+                            updateSeats();
+                        }
+                    }} variant="primary">Enroll</Button>
                 </Card.Body>
             </Card>        
     );
