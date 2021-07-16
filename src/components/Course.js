@@ -14,12 +14,19 @@ export default function Course({ courseProp }){
     // useState(<initial_value>)
     // <initial_values> -> any valid JavaScript data types
     const [ count, setCount ] = useState(0); // will monitor enrollment in a course
+    const [ seatsCount, setSeatsCount ] = useState(30); // will monitor the number of available seats
 
     // function enroll() {
     //     setCount(count + 1);
     // }
     const enroll = () => {
-        setCount(count + 1);
+        if (seatsCount === 0) {
+            // alert the user
+            alert('No more seats available');
+        } else {
+            setCount(count + 1); // increment
+            setSeatsCount(seatsCount - 1); // decrement
+        }
     }
 
     return (
