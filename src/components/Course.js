@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 
 export default function Course({ courseProp }){
@@ -15,6 +15,8 @@ export default function Course({ courseProp }){
     // <initial_values> -> any valid JavaScript data types
     const [ count, setCount ] = useState(0); // will monitor enrollment in a course
     const [ seatsCount, setSeatsCount ] = useState(30); // will monitor the number of available seats
+    //for the enroll button
+    const [isDisabled, setIsDisabled] = useState(false);
 
     // function enroll() {
     //     setCount(count + 1);
@@ -23,6 +25,13 @@ export default function Course({ courseProp }){
         setCount(count + 1);
         setSeatsCount(seatsCount - 1);
     };
+
+
+    useEffect(()=>{
+        if(seatsCount === 0){
+            setIsDisabled(true);
+        }
+    }, [seatsCount])
 
 
     return (
@@ -37,7 +46,12 @@ export default function Course({ courseProp }){
                     <p>{price}</p>
                     <p>{count} enrollees</p>
                     <p>{seatsCount} Seats Remaining</p>
-                    <Button onClick={} variant="primary">Enroll</Button>
+                    {isDisabled ? 
+                        <Button onClick={enroll} variant="primary" disabled>Enroll</Button>
+                     :
+                        <Button onClick={enroll} variant="primary">Enroll</Button>
+                 }
+
                 </Card.Body>
             </Card>        
     );
