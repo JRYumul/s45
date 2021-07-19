@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-
+import Swal from 'sweetalert2';
 
 export default function Register() {
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [verifyPassword, setVerifyPassword] = useState('');
+
+	//let's declare a variable that will describe the state of the register button component
+	const [registerButton, setRegisterButton] = useState(false);
 
 	//EXPLANATION FOR THE SCRIPT WE USED IN THE REGISTRATION;:
 	//The values is in the fields of the form is bound to the getter of the state and the event is bound to the setter. This is what is called two-way binding.
@@ -24,13 +27,12 @@ export default function Register() {
 	function registerUser(e){
 		e.preventDefault(); 
 
-		//let's modify our current logic to validate the data inserted by the user
-		if((email !== '' && password !== '' && verifyPassword !== '') && (password === verifyPassword)){
-			alert('You have successfully registered');
-
-		}else{
-			alert('Something Went Wrong, Check your Credentials')
-		}
+		Swal.fire({
+				//the properties of this created object will describe the structure of the alert message box
+				title: 'Yaaaaaaaaaaay!!!',
+				icon: 'success',
+				text: 'You have successfully registered'
+			});
 
 		//clearout the data inside the input fields
 		//call the state setters
@@ -38,6 +40,19 @@ export default function Register() {
 		setPassword('');
 		setVerifyPassword('');
 	}
+
+
+	useEffect(()=>{
+			//let's modify our current logic to validate the data inserted by the user
+		if((email !== '' && password !== '' && verifyPassword !== '') && (password === verifyPassword)){
+			setRegisterButton(true)
+
+
+		}else{
+			setRegisterButton(false)
+		}
+
+	}, [email, password, verifyPassword])
 
 	return(
 		<Form onSubmit={ (e) => registerUser(e)}>
@@ -59,7 +74,12 @@ export default function Register() {
 				<Form.Control type="password" placeholder="Verify Password" value={verifyPassword} onChange={e => setVerifyPassword(e.target.value)} required/>
 			</Form.Group>
 
-			<Button variant="primary" type="submit">Submit</Button>
+			{registerButton ?
+				<Button variant="primary" type="submit">Submit</Button>
+			 : 
+				<Button variant="primary" type="submit" disabled>Submit</Button>
+			}
+
 		</Form>
 
 
