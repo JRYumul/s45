@@ -21,11 +21,9 @@ export default function Course({ courseProp }){
     // }
     const enroll = () => {
         setCount(count + 1);
-    };
-
-    const updateSeats = () => {
         setSeatsCount(seatsCount - 1);
     };
+
 
     return (
             <Card className="card-highlight">
@@ -38,6 +36,7 @@ export default function Course({ courseProp }){
                     <h6>Price:</h6>
                     <p>{price}</p>
                     <p>{count} enrollees</p>
+                    <p>{seatsCount} Seats Remaining</p>
                     <Button onClick={() => {
                         if (seatsCount === 0) {
                             // do something
