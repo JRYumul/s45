@@ -37,15 +37,7 @@ export default function Course({ courseProp }){
                     <p>{price}</p>
                     <p>{count} enrollees</p>
                     <p>{seatsCount} Seats Remaining</p>
-                    <Button onClick={() => {
-                        if (seatsCount === 0) {
-                            // do something
-                            alert('No more seats available');
-                        } else {
-                            enroll();
-                            updateSeats();
-                        }
-                    }} variant="primary">Enroll</Button>
+                    <Button onClick={} variant="primary">Enroll</Button>
                 </Card.Body>
             </Card>        
     );
