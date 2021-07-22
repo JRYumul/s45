@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
 export default function Register() {
-
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [verifyPassword, setVerifyPassword] = useState('');
@@ -55,32 +54,34 @@ export default function Register() {
 	}, [email, password, verifyPassword])
 
 	return(
-		<Form onSubmit={ (e) => registerUser(e)}>
-			<Form.Group>
-				<Form.Label>Email Address:</Form.Label>
-				<Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} required/>
-				<Form.Text className="text-muted">
-					We'll never share your email with anyone else.
-				</Form.Text>
-			</Form.Group>
+		<Container>
+			<Form onSubmit={ (e) => registerUser(e)}>
+				<Form.Group>
+					<Form.Label>Email Address:</Form.Label>
+					<Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} required/>
+					<Form.Text className="text-muted">
+						We'll never share your email with anyone else.
+					</Form.Text>
+				</Form.Group>
 
-			<Form.Group>
-				<Form.Label>Password:</Form.Label>
-				<Form.Control type="password" placeholder="Enter Password" value={password} onChange={e => setPassword(e.target.value)} required/>
-			</Form.Group>
+				<Form.Group>
+					<Form.Label>Password:</Form.Label>
+					<Form.Control type="password" placeholder="Enter Password" value={password} onChange={e => setPassword(e.target.value)} required/>
+				</Form.Group>
 
-			<Form.Group>
-				<Form.Label>Verify Password:</Form.Label>
-				<Form.Control type="password" placeholder="Verify Password" value={verifyPassword} onChange={e => setVerifyPassword(e.target.value)} required/>
-			</Form.Group>
+				<Form.Group>
+					<Form.Label>Verify Password:</Form.Label>
+					<Form.Control type="password" placeholder="Verify Password" value={verifyPassword} onChange={e => setVerifyPassword(e.target.value)} required/>
+				</Form.Group>
 
-			{registerButton ?
-				<Button variant="primary" type="submit">Submit</Button>
-			 : 
-				<Button variant="primary" type="submit" disabled>Submit</Button>
-			}
+				{registerButton ?
+					<Button variant="primary" type="submit">Submit</Button>
+				 : 
+					<Button variant="primary" type="submit" disabled>Submit</Button>
+				}
 
-		</Form>
+			</Form>
+		</Container>
 
 
 		)

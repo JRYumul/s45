@@ -3,19 +3,23 @@ import './App.css';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
-import Counter from './components/Counter';
 import Register from './pages/Register';
+import Login from './pages/Login';
+import Error from './pages/Error';
 import { Container } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 export default function App() {
   return (
-  <>
-    <NavBar/>
-    <Container>
-    	<Register/>
-    </Container>
-    {/* <Home/> */}
-    <Courses/>
-  </>
+    <Router>
+      <NavBar/>
+      <Switch>
+        <Route exact path="/" component={Home}/>
+        <Route exact path="/courses" component={Courses}/>
+        <Route exact path="/register" component={Register}/>
+        <Route exact path="/login" component={Login}/>
+        <Route component={Error}/>
+      </Switch>
+    </Router>
   );
 }

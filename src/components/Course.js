@@ -28,6 +28,7 @@ export default function Course({ courseProp }){
 
 
     useEffect(()=>{
+
         if(seatsCount === 0){
             setIsDisabled(true);
         }
@@ -50,7 +51,7 @@ export default function Course({ courseProp }){
                         <Button onClick={enroll} variant="primary" disabled>Enroll</Button>
                      :
                         <Button onClick={enroll} variant="primary">Enroll</Button>
-                 }
+                    }
 
                 </Card.Body>
             </Card>        
