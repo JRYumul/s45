@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import UserContext from '../UserContext';
 
 export default function Register() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [verifyPassword, setVerifyPassword] = useState('');
+
+	const { user } = useContext(UserContext)
 
 	//let's declare a variable that will describe the state of the register button component
 	const [registerButton, setRegisterButton] = useState(false);
@@ -18,8 +22,6 @@ export default function Register() {
 	//What is two way binding?
 	//The two data binding means The data we changed in the view has updated the state.
 	//The data in the state has updated view
-
-
 
 	//let's create a function that will simulate an actual register page
 	//we want to add an alert if registration is successful
@@ -53,9 +55,16 @@ export default function Register() {
 
 	}, [email, password, verifyPassword])
 
+	//ACTIVITY:
+	//Make our Register page redirect any logged in users to our homepage that try to access the page
+
+	if(user.id != null){
+		return <Redirect to="/"/>
+	}
+
 	return(
 		<Container>
-			<Form onSubmit={ (e) => registerUser(e)}>
+			<Form className="mt-3" onSubmit={ (e) => registerUser(e)}>
 				<Form.Group>
 					<Form.Label>Email Address:</Form.Label>
 					<Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} required/>

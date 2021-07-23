@@ -1,4 +1,4 @@
-import { Row, Col, Button, Jumbotron } from 'react-bootstrap';
+import { Row, Col, Jumbotron } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
 export default function Banner({bannerProps}){
