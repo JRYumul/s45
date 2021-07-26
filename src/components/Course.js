@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export default function Course({ courseProp }){
-    const { name, description, price } = courseProp;
+    const { _id, name, description, price } = courseProp;
     // console.log(name);
 
     // Course states
@@ -45,14 +46,14 @@ export default function Course({ courseProp }){
                     </Card.Text>
                     <h6>Price:</h6>
                     <p>{price}</p>
-                    <p>{count} enrollees</p>
+{/*                    <p>{count} enrollees</p>
                     <p>{seatsCount} Seats Remaining</p>
                     {isDisabled ? 
                         <Button onClick={enroll} variant="primary" disabled>Enroll</Button>
                      :
                         <Button onClick={enroll} variant="primary">Enroll</Button>
-                    }
-
+                    }*/}
+                    <Link className="btn btn-primary" to={`/courses/${_id}`}>Details</Link>
                 </Card.Body>
             </Card>        
     );

@@ -4,6 +4,7 @@ import './App.css';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
+import SpecificCourse from './pages/SpecificCourse';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Error from './pages/Error';
@@ -30,7 +31,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    console.log(user)
+    // console.log(user)
 
     fetch(`${ process.env.REACT_APP_API_URL }/users/details`, {
       headers: {
@@ -63,6 +64,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={Home}/>
           <Route exact path="/courses" component={Courses}/>
+          <Route exact path="/courses/:courseId" component={SpecificCourse}/>
           <Route exact path="/register" component={Register}/>
           <Route exact path="/login" component={Login}/>
           <Route component={Error}/>

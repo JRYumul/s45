@@ -33,7 +33,7 @@ export default function Login(){
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data)
+			// console.log(data)
 
 			if(typeof data.access !== "undefined"){
 				localStorage.setItem('token', data.access)

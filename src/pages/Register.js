@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UserContext from '../UserContext';
 
 export default function Register() {
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
+	const [mobileNo, setMobileNo] = useState('');
 	const [password, setPassword] = useState('');
 	const [verifyPassword, setVerifyPassword] = useState('');
 
 	const { user } = useContext(UserContext)
+	const history = useHistory();
 
 	//let's declare a variable that will describe the state of the register button component
 	const [registerButton, setRegisterButton] = useState(false);
@@ -28,18 +32,72 @@ export default function Register() {
 	function registerUser(e){
 		e.preventDefault(); 
 
-		Swal.fire({
-				//the properties of this created object will describe the structure of the alert message box
-				title: 'Yaaaaaaaaaaay!!!',
-				icon: 'success',
-				text: 'You have successfully registered'
-			});
+		// Swal.fire({
+		// 		//the properties of this created object will describe the structure of the alert message box
+		// 		title: 'Yaaaaaaaaaaay!!!',
+		// 		icon: 'success',
+		// 		text: 'You have successfully registered'
+		// 	});
 
-		//clearout the data inside the input fields
-		//call the state setters
-		setEmail('');
-		setPassword('');
-		setVerifyPassword('');
+		// //clearout the data inside the input fields
+		// //call the state setters
+		// setEmail('');
+		// setPassword('');
+		// setVerifyPassword('');
+
+		fetch(`${ process.env.REACT_APP_API_URL}/users/checkEmail`, {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				email: email
+			})
+		})
+		.then(res => res.json())
+		.then(data => {
+
+			if(data === true){
+				Swal.fire({
+					title: 'Duplicate email found',
+					icon: 'error',
+					text: 'Please choose another'	
+				})
+			}else{
+				fetch(`${ process.env.REACT_APP_API_URL }/users/register`, {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						firstName: firstName,
+						lastName: lastName,
+						email: email,
+						mobileNo: mobileNo,
+						password: password
+					})
+				})
+				.then(res => res.json())
+				.then(data => {
+					if(data === true){
+						Swal.fire({
+							title: 'Registration successful',
+							icon: 'success',
+							text: 'Welcome to Zuitt Booking!'	
+						})
+
+						history.push('/login')
+					}else{
+						Swal.fire({
+							title: 'Something wrong',
+							icon: 'error',
+							text: 'Please try again.'	
+						})
+					}
+				})
+			}
+
+		})
 	}
 
 
@@ -65,12 +123,28 @@ export default function Register() {
 	return(
 		<Container>
 			<Form className="mt-3" onSubmit={ (e) => registerUser(e)}>
+
+				<Form.Group>
+					<Form.Label>First Name:</Form.Label>
+					<Form.Control type="text" placeholder="Enter first name" value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+				</Form.Group>
+
+				<Form.Group>
+					<Form.Label>Last Name:</Form.Label>
+					<Form.Control type="text" placeholder="Enter last name" value={lastName} onChange={e => setLastName(e.target.value)} required/>
+				</Form.Group>
+
 				<Form.Group>
 					<Form.Label>Email Address:</Form.Label>
 					<Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} required/>
 					<Form.Text className="text-muted">
 						We'll never share your email with anyone else.
 					</Form.Text>
+				</Form.Group>
+
+				<Form.Group>
+					<Form.Label>Mobile Number:</Form.Label>
+					<Form.Control type="text" placeholder="Enter mobile number" value={mobileNo} onChange={e => setMobileNo(e.target.value)} required/>
 				</Form.Group>
 
 				<Form.Group>
