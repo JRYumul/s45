@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Container, Card, Button } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import UserContext from '../UserContext';
 
@@ -15,6 +16,8 @@ export default function SpecificCourse(){
 
 	//useParams is how we receive the courseId passed via the URL
 	const { courseId } = useParams();
+
+	const history = useHistory();
 
 	useEffect(()=> {
 		// console.log(courseId)
@@ -36,6 +39,38 @@ export default function SpecificCourse(){
 
 	}, [])
 
+	const enroll = (courseId) => {
+		fetch(`${ process.env.REACT_APP_API_URL }/users/enroll`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${ localStorage.getItem('token') }`
+			},
+			body: JSON.stringify({
+				courseId: courseId
+			})
+		})
+		.then(res => res.json())
+		.then(data => {
+			// console.log(data)
+			if(data === true){
+				Swal.fire({
+					title: "Successfully enrolled",
+					icon: 'success',
+					text: "You have successfully enrolled for this course."
+				})
+
+				history.push("/courses")
+			}else{
+				Swal.fire({
+					title: "Something went wrong",
+					icon: "error",
+					text: "Please try again."
+				})
+			}
+		})
+	}
+
 	return(
 		<Container>
 			<Card className="mt-5">
@@ -48,7 +83,7 @@ export default function SpecificCourse(){
 				</Card.Body>
 				<Card.Footer>
 					{user.id !== null
-						? <Button variant="primary" block>Enroll</Button>
+						? <Button variant="primary" block onClick={() => enroll(courseId)}>Enroll</Button>
 						: <Link className="btn btn-danger btn-block" to="/login">Log in to Enroll</Link>
 					}
 				</Card.Footer>				
