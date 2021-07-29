@@ -3,6 +3,7 @@ import Course from "./Course";
 // import coursesData from "../data/courses";
 
 export default function UserView({coursesData}) {
+    console.log(coursesData)
     // const courses = coursesData.map(course => {
     //     return (
     //         //"courseData" in this case is a user-defined label for the data that we want to pass to our Course Component
